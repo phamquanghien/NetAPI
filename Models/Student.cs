@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NetAPI.Models
 {
@@ -12,5 +13,8 @@ namespace NetAPI.Models
         public string? Address { get; set; }
         [DataType(DataType.EmailAddress)]
         public required string Email { get; set; }
+        public Guid FacultyID { get; set; }
+        [ForeignKey("FacultyID")]
+        public Faculty? Faculty { get; set; }
     }
 }

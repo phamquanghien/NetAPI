@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetAPI.Data;
 
@@ -10,9 +11,11 @@ using NetAPI.Data;
 namespace NetAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231228123728_Create_Table_Faculty")]
+    partial class Create_Table_Faculty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
@@ -65,7 +68,20 @@ namespace NetAPI.Migrations
 
                     b.HasKey("StudentID");
 
+                    b.HasIndex("FacultyID");
+
                     b.ToTable("Student");
+                });
+
+            modelBuilder.Entity("NetAPI.Models.Student", b =>
+                {
+                    b.HasOne("NetAPI.Models.Faculty", "Faculty")
+                        .WithMany()
+                        .HasForeignKey("FacultyID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Faculty");
                 });
 #pragma warning restore 612, 618
         }
