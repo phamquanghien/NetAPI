@@ -17,6 +17,25 @@ namespace NetAPI.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
 
+            modelBuilder.Entity("NetAPI.Models.Customer", b =>
+                {
+                    b.Property<Guid>("CustomerID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CustomerCode")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CustomerID");
+
+                    b.ToTable("Customers");
+                });
+
             modelBuilder.Entity("NetAPI.Models.Faculty", b =>
                 {
                     b.Property<Guid>("FacultyID")
@@ -65,7 +84,20 @@ namespace NetAPI.Migrations
 
                     b.HasKey("StudentID");
 
+                    b.HasIndex("FacultyID");
+
                     b.ToTable("Student");
+                });
+
+            modelBuilder.Entity("NetAPI.Models.Student", b =>
+                {
+                    b.HasOne("NetAPI.Models.Faculty", "Faculty")
+                        .WithMany()
+                        .HasForeignKey("FacultyID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Faculty");
                 });
 #pragma warning restore 612, 618
         }

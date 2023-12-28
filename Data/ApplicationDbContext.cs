@@ -16,5 +16,6 @@ namespace NetAPI.Data
 
         public DbSet<Student> Student { get; set; } = default!;
         public DbSet<Faculty> Faculty { get; set; } = default!;
+        public DbSet<Customer> Customer { get; set; } = default!;
     }
 }
